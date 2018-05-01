@@ -4557,6 +4557,14 @@ static void phb4_init_hw(struct phb4 *p, bool first_init)
 	PHBDBG(p, "New system config    : 0x%016llx\n",
 	       in_be64(p->regs + PHB_PCIE_SCR));
 
+	/* Init_4a - PCIE override to force detect lane-12 */
+	if (p->chip_id != 0 && p->index == 5) {
+	val = in_be64(p->regs + PHB_PCIE_DLP_CTL);
+	val |= PPC_BIT(9);
+	val |= PPC_BIT(44);
+	out_be64(p->regs + PHB_PCIE_DLP_CTL, val);
+	}
+
 	/* Init_5 - deassert CFG reset */
 	creset = in_be64(p->regs + PHB_PCIE_CRESET);
 	PHBDBG(p, "Initial PHB CRESET is 0x%016llx\n", creset);
