@@ -4561,7 +4561,7 @@ static void phb4_init_hw(struct phb4 *p, bool first_init)
 	if (p->chip_id != 0 && p->index == 5) {
 	val = in_be64(p->regs + PHB_PCIE_DLP_CTL);
 	val |= PPC_BIT(9);
-	val |= PPC_BIT(44);
+	val |= PPC_BIT(47);
 	out_be64(p->regs + PHB_PCIE_DLP_CTL, val);
 	}
 
