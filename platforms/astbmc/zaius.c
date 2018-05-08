@@ -117,6 +117,49 @@ static void zaius_create_ocapi_i2c_bus(void)
 	}
 }
 
+static const struct slot_table_entry zaius_gpu0[] = {
+	{
+		.etype = st_pluggable_slot,
+		.location = ST_LOC_DEVFN(0x20,0),
+		.name = "GPU0",
+	},
+	{ .etype = st_end },
+};
+
+static const struct slot_table_entry zaius_gpu1[] = {
+	{
+		.etype = st_pluggable_slot,
+		.location = ST_LOC_DEVFN(0x20,0),
+		.name = "GPU1",
+	},
+	{ .etype = st_end },
+};
+
+static const struct slot_table_entry zaius_gpu0_phb[] = {
+	{
+		.etype = st_builtin_dev,
+		.location = ST_LOC_DEVFN(0,0),
+		.children = zaius_gpu0,
+	},
+	{ .etype = st_end },
+};
+
+static const struct slot_table_entry zaius_gpu1_phb[] = {
+	{
+		.etype = st_builtin_dev,
+		.location = ST_LOC_DEVFN(0,0),
+		.children = zaius_gpu1,
+	},
+	{ .etype = st_end },
+};
+
+static const struct slot_table_entry zaius_phb_table[] = {
+	ST_PHB_ENTRY(0, 0, zaius_gpu0_phb),
+	ST_PHB_ENTRY(8, 0, zaius_gpu1_phb),
+
+	{ .etype = st_end },
+};
+
 static bool zaius_probe(void)
 {
 	if (!dt_node_is_compatible(dt_root, "ingrasys,zaius"))
@@ -130,6 +173,7 @@ static bool zaius_probe(void)
 
 	zaius_create_npu();
 	zaius_create_ocapi_i2c_bus();
+	slot_table_init(zaius_phb_table);
 
 	return true;
 }
