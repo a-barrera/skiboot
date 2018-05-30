@@ -185,7 +185,7 @@ static int __pci_find_dev_by_location(struct phb *phb,
 	if (!phb || !pd)
 		return 0;
 
-	if ((pd->bdfn & 0xff) == location)
+	if ((pd->bdfn & 0xffff) == location)
 		return 1;
 
 	return 0;
