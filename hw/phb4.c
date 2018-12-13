@@ -2649,7 +2649,9 @@ static bool phb4_adapter_in_whitelist(uint32_t vdid)
 
 static struct pci_card_id lane_eq_disable[] = {
 	{ 0x10de, 0x17fd }, /* Nvidia GM200GL [Tesla M40] */
-	{ 0x10de, 0x1db4 }, /* Nvidia GV100 */
+	{ 0x10de, 0x1db4 }, /* Nvidia GV100 16GB */
+        { 0x10de, 0x1db6 }, /* Nvidia GV100 32GB */
+        { 0x10de, 0x1eb8 }, /* Nvidia TU104 */
 };
 
 static bool phb4_lane_eq_retry_whitelist(uint32_t vdid)
